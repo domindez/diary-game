@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'jsx-quotes': ['error', 'prefer-single'],
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
+    'no-tabs': 'off'
   }
 }

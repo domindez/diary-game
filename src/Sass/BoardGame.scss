@@ -1,0 +1,106 @@
+.boardgame {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto;
+	grid-template-rows: auto auto auto auto auto auto auto;
+	margin: 20px 0px 120px;
+
+	.cell {
+		background-color: #fff;
+		height: 40px;
+		width: 40px;
+		border: 0.5px solid #35c8c8;
+		box-sizing: content-box;
+		cursor: pointer;
+		-webkit-tap-highlight-color: #cefcf630;
+		border-collapse: collapse;
+		position: relative;
+	}
+	
+	.green {
+		background-color: #d2fffa;
+		z-index: 5;
+		background-image: url('../img/tile.png');
+		background-size: contain;
+	}
+
+	.red {
+		background-color: #f1c7fc;
+	}
+
+	.yellow {
+		background-color: #fffcaa;
+		z-index: 5;
+		animation: border-glow 2s ease-in infinite;
+	}
+	@keyframes border-glow {
+		0% {
+		}
+		50% {
+			box-shadow: 0px 0px 0px 3px rgba(163, 173, 31, 0.51);
+			border-radius: 1px;
+		}
+		100% {
+		}
+	}
+
+	.game-icon {
+		margin-top: 2px;
+		font-size: 1.5em;
+		color: rgb(0, 59, 0);
+	}
+
+	.game-container {
+		background-color: transparent;
+		// background-image: url("../img/game-background.png");
+		padding: 30px 40px 40px;
+		background-size: 100%;
+		background-repeat: no-repeat;
+		background-position-y: 10px;
+	}
+
+	.arrow {
+		color: #43dfa3;
+		font-size: 22px;
+	}
+
+	.player {
+		position: absolute;
+		width: 35px;
+		bottom: 5px;
+		left: 5px;
+		z-index: 10;
+		pointer-events: none;
+		animation: player 2s ease-in-out infinite;
+		
+	}
+
+	@keyframes player {
+		0% {
+		}
+		50% {
+			transform: scale(105%);
+		}
+		100% {
+		}
+	}
+
+	.beer {
+		position: absolute;
+		max-width: 170%;
+		bottom: -0px;
+		left: -10px;
+		z-index: 1;
+		pointer-events: none;
+		transform: rotate(10deg);
+		animation: pulse 5s ease-in-out infinite;
+	}
+	@keyframes pulse {
+		0% {
+		}
+		50% {
+			transform: scale(105%);
+		}
+		100% {
+		}
+	}
+}
