@@ -1,5 +1,4 @@
-import React from 'react'
-
+import '../Sass/LifePanel.scss'
 interface Props {
   stops: number
   userBottles: number
@@ -7,8 +6,11 @@ interface Props {
 
 const LifePanel = ({ stops, userBottles }: Props) => {
   return (
-		<div>
-      stops = {stops}
+		<div className='life-panel'>
+      <div className='stop-container'>
+        <img className='stop' src={require('../img/stop.png')} alt='stop' />
+        <p>{stops}</p>
+      </div>
 		</div>
   )
 }
