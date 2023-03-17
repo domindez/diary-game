@@ -8,4 +8,6 @@ export interface GameStatus {
   canMove: boolean
   isWin: boolean
   clickedCell: number[]
+  stops: number
+  userBottles: number
 }

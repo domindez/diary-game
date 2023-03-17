@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSkull, faCaretDown, faCaretUp, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function printBoardGame (gameStatus: any, clickCell: any) {
   const alto = 12
@@ -32,14 +32,13 @@ export default function printBoardGame (gameStatus: any, clickCell: any) {
 			key={x}
         className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : 'cell'}
         onClick={() => clickCell(coordenadasCelda)}>
-        {up && !esMuerte ? <FontAwesomeIcon className='game-icon arrow' icon={faCaretUp} /> : null}
-        {down && !esMuerte ? <FontAwesomeIcon className='game-icon arrow' icon={faCaretDown} /> : null}
-        {left && !esMuerte ? <FontAwesomeIcon className='game-icon arrow' icon={faCaretLeft} /> : null}
-        {right && !esMuerte ? <FontAwesomeIcon className='game-icon arrow' icon={faCaretRight} /> : null}
-        {playerIsHere ? <img className='player' src={require('../img/player.png')} alt='player' /> : null}
-        {esMuerte ? <FontAwesomeIcon className='game-icon' icon={faSkull} /> : null}
-        {esBotella ? <img className='beer' src={require('../img/beer.png')} alt='player' /> : null}
-        {/* {esBotella ? <FontAwesomeIcon className='game-icon' icon={faWineBottle} /> : null} */}
+        {up && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretUp} />}
+        {down && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretDown} />}
+        {left && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretLeft} />}
+        {right && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretRight} />}
+        {playerIsHere && <img className='player' src={require('../img/player.png')} alt='player' /> }
+        {esMuerte && <img className='stop' src={require('../img/stop.png')} alt='stop' />}
+        {esBotella && <img className='beer' src={require('../img/beer.png')} alt='bottle' />}
       </button>
     }
 

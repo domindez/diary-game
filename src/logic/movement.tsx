@@ -6,6 +6,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
   const clickedCell = gameStatus.clickedCell
   const path = gameStatus.path
   const canMove = gameStatus.canMove
+  const stops = gameStatus.stops
 
   const x = 1
   const y = 0
@@ -33,7 +34,13 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
   if (!canMove) return
 
   if (!cellIsGreen() && cellIsClose()) {
-    setGameStatus({ ...gameStatus, justDeath: true, canMove: false })
+    setGameStatus({
+      ...gameStatus,
+      justDeath: true,
+      playerPos: [],
+      canMove: false,
+      stops: stops + 1
+    })
     return
   }
 
