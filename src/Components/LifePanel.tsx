@@ -1,10 +1,18 @@
+import { type UserData } from '../logic/interfaces'
 import '../Sass/LifePanel.scss'
 interface Props {
   stops: number
-  userBottles: number
 }
 
-const LifePanel = ({ stops, userBottles }: Props) => {
+const LifePanel = ({ stops }: Props) => {
+  let userData: UserData
+  let userBottles = 0
+  const storage = localStorage.getItem('diary-tfy-user')
+  if (storage != null) {
+    userData = JSON.parse(storage)
+    userBottles = userData.nBottles
+  }
+
   return (
 		<div className='life-panel'>
       <div className='panel-container'>

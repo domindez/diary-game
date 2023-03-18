@@ -77,8 +77,11 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
       const newGameStatus = {
         ...prevGameStatus,
         bottlePos: [],
-        canMove: false
+        canMove: false,
+        isWin: true
       }
+      increaseLocalStorageData('nBottles', 1)
+      increaseLocalStorageData('livesSaved', prevGameStatus.lives)
       return newGameStatus
     })
   }
@@ -123,5 +126,15 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
       }
       return newGameStatus
     })
+  }
+}
+
+const increaseLocalStorageData = (propName: string, qty: number) => {
+  const storage = localStorage.getItem('diary-tfy-user')
+  if (storage != null) {
+    const userData = JSON.parse(storage)
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    userData[propName] = userData[propName] + qty
+    localStorage.setItem('diary-tfy-user', JSON.stringify(userData))
   }
 }

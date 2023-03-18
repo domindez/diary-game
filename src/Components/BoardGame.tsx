@@ -3,6 +3,7 @@ import { movement } from '../logic/movement'
 import '../Sass/BoardGame.scss'
 import { type GameStatus } from '../logic/interfaces'
 import PrintBoardGame from './printBoardGame'
+import { game1 } from '../logic/gameGenerator'
 
 interface Props {
   gameStatus: GameStatus
@@ -23,9 +24,12 @@ const BoardGame = ({ gameStatus, setGameStatus }: Props) => {
 
   useEffect(() => {
     if (savedGame) return
-    const recoveredGameStatus = localStorage.getItem('diary-tfy-game')
-    if (recoveredGameStatus == null) return
-    setGameStatus(JSON.parse(recoveredGameStatus))
+    const storageData = localStorage.getItem('diary-tfy-game')
+    if (storageData == null) return
+    const recoveredGameStatus: GameStatus = JSON.parse(storageData)
+    setGameStatus(recoveredGameStatus)
+    // Si cambia el juego cambiar la partida
+    if (recoveredGameStatus.gameID !== game1.gameID) { setGameStatus(game1) }
     savedGame = true
   }, [])
 

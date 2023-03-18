@@ -1,0 +1,60 @@
+.overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #00000050;
+	z-index: 10;
+	.popup {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: white;
+		width: 300px;
+		padding: 30px 20px;
+
+		&__img {
+			height: 140px;
+			margin-bottom: 10px;
+		}
+
+		p {
+			img {
+				height: 20px;
+			}
+		}
+
+		h2 {
+			font-size: 1.3em;
+		}
+
+		&__block-container{
+			display: flex;
+			width: 100%;
+			height: 50px;
+			gap: 10px;
+
+			.popup__block-panel{
+				border: 1px solid black;
+				width: 50%;
+				height: 50px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+
+				img{
+					height: 40px;
+				}
+
+				p{
+					font-size: 1.8em;
+				}
+			}
+		}
+	}
+}

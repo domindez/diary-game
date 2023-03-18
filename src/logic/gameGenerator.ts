@@ -1,9 +1,8 @@
-const defaultInitialPos = [5, 0]
+const defaultInitialPos = [6, 0]
 const bottlePos = [2, 0]
 
 export const game1 = {
-  gameID: 1,
-  playerID: null,
+  gameID: 3,
   initialPos: defaultInitialPos,
   playerPos: defaultInitialPos,
   bottlePos: bottlePos,

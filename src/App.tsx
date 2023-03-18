@@ -1,40 +1,46 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BoardGame from './Components/BoardGame'
 import Header from './Components/Header'
 import LifePanel from './Components/LifePanel'
+import WinPanel from './Components/WinPanel'
 import { type GameStatus } from './logic/interfaces'
 import './Sass/App.scss'
 import './Sass/Clouds.scss'
 
 function App () {
-  const defaultInitialPos = [5, 0]
-  const bottlePos = [2, 0]
-
-  const defaultGameStatus = {
-    gameID: 1,
-    playerID: null,
-    initialPos: defaultInitialPos,
-    playerPos: defaultInitialPos,
-    bottlePos: bottlePos,
-    trail: [defaultInitialPos],
-    path: [bottlePos, [5, 0], [4, 0], [3, 0], [6, 0], [7, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [4, 5]],
+  const defaultGameStatus: GameStatus = {
+    gameID: 0,
+    initialPos: [],
+    playerPos: [],
+    bottlePos: [],
+    trail: [],
+    path: [],
     justDeath: false,
-    canMove: true,
+    canMove: false,
     clickedCell: [],
     isWin: false,
-    lives: 10,
-    userBottles: 0
+    lives: 0
   }
 
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
 
+  useEffect(() => {
+    const userData = localStorage.getItem('diary-tfy-user')
+    if (userData == null) {
+      localStorage.setItem('diary-tfy-user', JSON.stringify({
+        userID: new Date().getTime(),
+        livesSaved: 0,
+        nBottles: 0
+      }))
+    }
+  }, [])
+
   return (
 		<div className='app' >
 			<Header />
-			<LifePanel stops={gameStatus.lives} userBottles={gameStatus.userBottles}/>
-			<BoardGame
-			gameStatus={gameStatus}
-			setGameStatus={setGameStatus}/>
+			<LifePanel stops={gameStatus.lives} />
+			<BoardGame gameStatus={gameStatus}setGameStatus={setGameStatus}/>
+      {(gameStatus.isWin || gameStatus.lives < 1) && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives}/>}
 			<div className='clouds-container'>{clouds}</div>
 			<div className='background'></div>
 		</div>
