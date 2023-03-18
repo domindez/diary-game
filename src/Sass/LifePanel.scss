@@ -1,8 +1,26 @@
 .life-panel {
-	.stop-container {
+	display: flex;
+	gap: 30px;
+	.panel-container {
 		display: flex;
-		.stop {
-			width: 35px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		p {
+			font-family: 'Barlow Condensed', sans-serif;
+			font-size: 1.7em;
+			color: white;
+			text-shadow: 1px 1px 0px black;
+		}
+		.stop-icon {
+			height: 32px;
+			margin-right: 10px;
+		}
+
+		.beer-icon {
+			height: 40px;
+			margin-right: -5px;
+			transform: rotate(10deg);
 		}
 	}
 }

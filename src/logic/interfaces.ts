@@ -1,4 +1,6 @@
 export interface GameStatus {
+  gameID: number
+  playerID: null | number
   initialPos: number[]
   playerPos: number[]
   bottlePos: number[]
@@ -8,6 +10,6 @@ export interface GameStatus {
   canMove: boolean
   isWin: boolean
   clickedCell: number[]
-  stops: number
+  lives: number
   userBottles: number
 }

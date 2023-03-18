@@ -8,33 +8,33 @@ import './Sass/Clouds.scss'
 
 function App () {
   const defaultInitialPos = [5, 0]
+  const bottlePos = [2, 0]
 
   const defaultGameStatus = {
+    gameID: 1,
+    playerID: null,
     initialPos: defaultInitialPos,
     playerPos: defaultInitialPos,
-    bottlePos: [10, 5],
+    bottlePos: bottlePos,
     trail: [defaultInitialPos],
-    path: [[5, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [4, 5]],
+    path: [bottlePos, [5, 0], [4, 0], [3, 0], [6, 0], [7, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [4, 5]],
     justDeath: false,
     canMove: true,
     clickedCell: [],
     isWin: false,
-    stops: 0,
+    lives: 10,
     userBottles: 0
   }
 
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
-  console.log('gameStatus :>> ', gameStatus.stops)
 
   return (
 		<div className='app' >
 			<Header />
-			<LifePanel stops={gameStatus.stops} userBottles={gameStatus.userBottles}/>
+			<LifePanel stops={gameStatus.lives} userBottles={gameStatus.userBottles}/>
 			<BoardGame
 			gameStatus={gameStatus}
-			setGameStatus={setGameStatus}
-			defaultInitialPos={defaultInitialPos}
-			/>
+			setGameStatus={setGameStatus}/>
 			<div className='clouds-container'>{clouds}</div>
 			<div className='background'></div>
 		</div>

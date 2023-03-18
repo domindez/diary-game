@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'jsx-quotes': ['error', 'prefer-single'],
     'react/react-in-jsx-scope': 'off',
-    'no-tabs': 'off'
+    'no-tabs': 'off',
+    'object-shorthand': 'off'
   }
 }

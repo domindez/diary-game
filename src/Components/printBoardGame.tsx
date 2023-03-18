@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
-export default function printBoardGame (gameStatus: any, clickCell: any) {
+export default function PrintBoardGame (gameStatus: any, clickCell: any) {
   const alto = 12
   const ancho = 7
   const Y = 0; const X = 1
