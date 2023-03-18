@@ -5,16 +5,18 @@
 	left: 0;
 	right: 0;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	background-color: #00000050;
 	z-index: 10;
+
 	.popup {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		background-color: white;
-		width: 300px;
+		width: 310px;
 		padding: 30px 20px;
 
 		&__img {
@@ -30,30 +32,53 @@
 
 		h2 {
 			font-size: 1.3em;
+			margin-bottom: 10px;
 		}
 
-		&__block-container{
+		&__block-container {
+			margin: 10px 0px 30px;
 			display: flex;
 			width: 100%;
 			height: 50px;
 			gap: 10px;
 
-			.popup__block-panel{
-				border: 1px solid black;
+
+			.popup__block-panel {
+				padding: 30px;
+				background-color: #f3f3f3;
 				width: 50%;
-				height: 50px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				gap: 10px;
 
-				img{
+				img {
 					height: 40px;
+					margin-right: 10px;
 				}
 
-				p{
+				.beer{
+					height: 50px;
+					margin-right: 0px;
+				}
+
+				p {
 					font-size: 1.8em;
 				}
+			}
+		}
+	}
+
+	.tfy-msg{
+		background-color: white;
+		margin-top: 20px;
+		width: 310px;
+		padding: 10px 10px;
+
+		p{
+			text-align: center;
+
+			a{
+				color: blue;
 			}
 		}
 	}

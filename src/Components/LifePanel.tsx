@@ -1,17 +1,11 @@
-import { type UserData } from '../logic/interfaces'
+import { getUserDataFromStorage } from '../logic/func'
 import '../Sass/LifePanel.scss'
 interface Props {
   stops: number
 }
 
 const LifePanel = ({ stops }: Props) => {
-  let userData: UserData
-  let userBottles = 0
-  const storage = localStorage.getItem('diary-tfy-user')
-  if (storage != null) {
-    userData = JSON.parse(storage)
-    userBottles = userData.nBottles
-  }
+  const userData = getUserDataFromStorage()
 
   return (
 		<div className='life-panel'>
@@ -21,7 +15,7 @@ const LifePanel = ({ stops }: Props) => {
       </div>
       <div className='panel-container'>
         <img className='beer-icon' src={require('../img/beer.png')} alt='stop' />
-        <p>· {userBottles}</p>
+        <p>· {userData?.nBottles}</p>
       </div>
 		</div>
   )

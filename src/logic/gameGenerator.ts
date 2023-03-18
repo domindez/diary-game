@@ -2,7 +2,7 @@ const defaultInitialPos = [6, 0]
 const bottlePos = [2, 0]
 
 export const game1 = {
-  gameID: 3,
+  gameID: 2,
   initialPos: defaultInitialPos,
   playerPos: defaultInitialPos,
   bottlePos: bottlePos,
@@ -12,6 +12,6 @@ export const game1 = {
   canMove: true,
   clickedCell: [],
   isWin: false,
-  lives: 10,
+  lives: 3,
   userBottles: 0
 }

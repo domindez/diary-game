@@ -10,6 +10,9 @@ const Popup = ({ children }: Props) => {
 			<div className='popup'>
 			{children}
 			</div>
+			<div className='tfy-msg'>
+				<p>Give Me a Beer es un juego basado en <a href='https://trivify.es/isla-misterio-para-bares.html'>Isla Misterio.</a> Un juego para llenar tu bar.</p>
+				</div>
 		</div>
   )
 }
