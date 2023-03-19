@@ -67,7 +67,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
         }
         return newGameStatus
       })
-    }, 1000)
+    }, 500)
     return
   }
 

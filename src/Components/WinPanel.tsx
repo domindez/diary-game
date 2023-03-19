@@ -5,14 +5,15 @@ import ShareBtns from './ShareBtns'
 interface Props {
   lives: number
   isWin: boolean
+  setShowPopup: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WinPanel = ({ lives, isWin }: Props) => {
+const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
   const userData = getUserDataFromStorage()
 
   if (isWin) {
     return (
-		<Popup>
+		<Popup setShowPopup={setShowPopup}>
 			<img className='popup__img' src={require('../img/win-beer.png')} alt='bottle' />
 			<h2>¡Cerveeeeeeeza!</h2>
 			<div className='popup__block-container'>
@@ -33,7 +34,7 @@ const WinPanel = ({ lives, isWin }: Props) => {
     )
   } else {
     return (
-			<Popup>
+			<Popup setShowPopup={setShowPopup}>
 			<img className='popup__img' src={require('../img/police.png')} alt='bottle' />
 			<h2>¿A dónde ibas dando tumbos?</h2>
 			<div className='popup__block-container'>

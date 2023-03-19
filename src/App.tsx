@@ -23,6 +23,7 @@ function App () {
   }
 
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
+  const [showPopup, setShowPopup] = useState(false)
 
   useEffect(() => {
     const userData = localStorage.getItem('diary-tfy-user')
@@ -35,12 +36,16 @@ function App () {
     }
   }, [])
 
+  useEffect(() => {
+    if (gameStatus.isWin || gameStatus.lives < 1) setShowPopup(true)
+  }, [gameStatus.isWin, gameStatus.lives])
+
   return (
 		<div className='app' >
 			<Header />
 			<LifePanel stops={gameStatus.lives} />
 			<BoardGame gameStatus={gameStatus}setGameStatus={setGameStatus}/>
-      {(gameStatus.isWin || gameStatus.lives < 1) && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives}/>}
+      {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup}/>}
 			<div className='clouds-container'>{clouds}</div>
 			<div className='background'></div>
 		</div>
