@@ -2,7 +2,7 @@ const defaultInitialPos = [6, 0]
 const bottlePos = [3, 5]
 
 export const game1 = {
-  gameID: 2,
+  gameID: 1,
   initialPos: defaultInitialPos,
   playerPos: defaultInitialPos,
   bottlePos: bottlePos,

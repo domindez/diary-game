@@ -31,8 +31,37 @@ body {
 		left: 0;
 		z-index: -20;
 		background-image: url('../img/background.png');
-		background-position:center bottom;
+		background-position: center bottom;
 		background-repeat: repeat-x;
 		background-size: contain;
+	}
+
+	.control-btns{
+		display: flex;
+		gap: 20px;
+		
+		.statistics-btn {
+			color: #35c8c8;
+			background-color: #fff;
+			padding: 5px;
+			border-radius: 2px;
+			height: 30px;
+			width: 30px;
+			cursor: pointer;
+		}
+
+		.music{
+			color: #35c8c8;
+			background-color: #fff;
+			padding: 5px;
+			border-radius: 2px;
+			height: 30px;
+			width: 30px;
+			cursor: pointer;
+		}
+
+		.no-music{
+			color: #d7dddd;
+		}
 	}
 }
