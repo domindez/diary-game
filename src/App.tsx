@@ -13,6 +13,7 @@ import { faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons'
 
 function App () {
   const defaultGameStatus: GameStatus = {
+    gameReady: false,
     gameID: 0,
     initialPos: [],
     playerPos: [],
@@ -43,6 +44,7 @@ function App () {
   }, [])
 
   useEffect(() => {
+    if (!gameStatus.gameReady) return
     if (gameStatus.isWin || gameStatus.lives < 1) setShowPopup(true)
   }, [gameStatus.isWin, gameStatus.lives])
 

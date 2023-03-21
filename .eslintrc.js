@@ -23,6 +23,8 @@ module.exports = {
     'jsx-quotes': ['error', 'prefer-single'],
     'react/react-in-jsx-scope': 'off',
     'no-tabs': 'off',
-    'object-shorthand': 'off'
+    'object-shorthand': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }

@@ -1,4 +1,5 @@
 export interface GameStatus {
+  gameReady: boolean
   gameID: number
   initialPos: number[]
   playerPos: number[]
