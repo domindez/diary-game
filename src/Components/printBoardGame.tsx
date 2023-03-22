@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { type GameStatus } from '../logic/interfaces'
 
-export default function PrintBoardGame (gameStatus: any, clickCell: any) {
+export default function PrintBoardGame (gameStatus: GameStatus, clickCell: any) {
   const alto = 12
   const ancho = 7
   const Y = 0; const X = 1
@@ -31,6 +32,7 @@ export default function PrintBoardGame (gameStatus: any, clickCell: any) {
 			<button
 			key={x}
         className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : 'cell'}
+        // className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : gameStatus.path.some((pathCoords) => pathCoords[Y] === y && pathCoords[X] === x) ? 'cell green' : 'cell'}
         onClick={() => clickCell(coordenadasCelda)}>
         {up && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretUp} />}
         {down && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretDown} />}

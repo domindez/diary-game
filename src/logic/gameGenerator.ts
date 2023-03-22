@@ -1,3 +1,17 @@
+// import axios from 'axios'
+// import { type GameStatus } from './interfaces'
+
+// export let game1: GameStatus
+
+// export async function getNewGame () {
+//   try {
+//     const response = await axios.get('http://localhost:4000/api/onload')
+//     console.log(response.data)
+//     game1 = response.data
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 const defaultInitialPos = [11, 6]
 const bottlePos = [3, 5]
 

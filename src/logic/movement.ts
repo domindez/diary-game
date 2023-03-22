@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { getUserDataFromStorage } from './func'
 import { type GameStatus } from './interfaces'
 
 export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
@@ -82,6 +84,14 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
       }
       increaseLocalStorageData('nBottles', 1)
       increaseLocalStorageData('livesSaved', prevGameStatus.lives)
+      const audio = new Audio('/endgame.mp3')
+      void audio.play()
+      try {
+        const data = getUserDataFromStorage()
+        void axios.post('http://localhost:4000/api/onwin', data)
+      } catch (error) {
+        console.error(error)
+      }
       return newGameStatus
     })
   }
