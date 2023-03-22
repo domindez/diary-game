@@ -19,10 +19,11 @@
     "react": "^18.2.0",
     "react-audio-player": "^0.17.0",
     "react-dom": "^18.2.0",
+    "react-gtm-module": "^2.0.11",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://trivify.es/diary-beer",
+  "homepage": "https://trivify.es/give-me-a-beer",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-gtm-module": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "eslint": "^8.36.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
