@@ -23,12 +23,15 @@ const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
   }, [])
 
   const countDownDate = new Date(
-    `${currentTime.getFullYear()}-${
-      currentTime.getMonth() + 1
-    }-${currentTime.getDate()} 23:59:59`
+    currentTime.getFullYear(),
+    currentTime.getMonth(),
+    currentTime.getDate(),
+    23,
+    59,
+    59
   ).getTime()
 
-  const distance = countDownDate - currentTime.getTime()
+  const distance = countDownDate - Date.now()
 
   const getRemainingTime = () => {
     const hours = Math.floor(
