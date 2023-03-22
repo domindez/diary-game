@@ -85,7 +85,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
       }
       increaseLocalStorageData('nBottles', 1)
       increaseLocalStorageData('livesSaved', prevGameStatus.lives)
-      const audio = new Audio('/endgame.mp3')
+      const audio = new Audio('endgame.mp3')
       void audio.play()
       try {
         const data = getUserDataFromStorage()

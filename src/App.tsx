@@ -115,7 +115,7 @@ function App () {
         {(gameStatus.isWin || gameStatus.lives < 1) && <StatisticsBtn setShowPopup={setShowPopup} />}
       </div>
 
-      {musicPlaying && <AudioPlayer src='/musictheme.mp3' autoPlay loop muted={!soundEnabled}/>}
+      {musicPlaying && <AudioPlayer src='musictheme.mp3' autoPlay loop muted={!soundEnabled}/>}
       <div className='clouds-container'>{clouds}</div>
       <div className={'background'}></div>
     </div>
