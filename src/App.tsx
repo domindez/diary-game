@@ -9,9 +9,10 @@ import AudioPlayer from 'react-audio-player'
 import './Sass/App.scss'
 import './Sass/Clouds.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons'
+import { faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { getUserDataFromStorage } from './logic/func'
+import API_BASE_URL from './config'
 
 function App () {
   const defaultGameStatus: GameStatus = {
@@ -35,6 +36,7 @@ function App () {
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [theme, setTheme] = useState('pixel')
 
   let gameRecovered = false
 
@@ -55,7 +57,7 @@ function App () {
     const getActiveGame = async () => {
       try {
         const data = getUserDataFromStorage()
-        const response = await axios.post('http://localhost:4000/api/onload', data)
+        const response = await axios.post(`${API_BASE_URL}/api/onload`, data)
         setActiveGame(response.data)
         setLoading(false)
       } catch (error) {
@@ -101,7 +103,7 @@ function App () {
   }
 
   return (
-    <div className='app'>
+    <div className={`app ${theme}`}>
       <Header />
       <LifePanel stops={gameStatus.lives} />
       <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus}/>
@@ -109,13 +111,13 @@ function App () {
 
       <div className='control-btns'>
         <FontAwesomeIcon onClick={toggleMusic} className={musicPlaying ? (soundEnabled ? 'music' : 'music no-music') : 'music no-music'} icon={musicPlaying ? (soundEnabled ? faVolumeHigh : faVolumeXmark) : faVolumeXmark}/>
-
+        <FontAwesomeIcon onClick={() => { setTheme('west') }} className='music hide' icon={faWandSparkles}/>
         {(gameStatus.isWin || gameStatus.lives < 1) && <StatisticsBtn setShowPopup={setShowPopup} />}
       </div>
 
       {musicPlaying && <AudioPlayer src='/musictheme.mp3' autoPlay loop muted={!soundEnabled}/>}
       <div className='clouds-container'>{clouds}</div>
-      <div className='background'></div>
+      <div className={'background'}></div>
     </div>
   )
 }

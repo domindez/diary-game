@@ -1,4 +1,5 @@
 import axios from 'axios'
+import API_BASE_URL from '../config'
 import { getUserDataFromStorage } from './func'
 import { type GameStatus } from './interfaces'
 
@@ -88,7 +89,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
       void audio.play()
       try {
         const data = getUserDataFromStorage()
-        void axios.post('http://localhost:4000/api/onwin', data)
+        void axios.post(`${API_BASE_URL}/api/onwin`, data)
       } catch (error) {
         console.error(error)
       }

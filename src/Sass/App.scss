@@ -12,16 +12,15 @@ img {
 	max-width: 100%;
 }
 
-body {
-	background-color: #35c8c8;
-}
+
 
 .app {
 	display: flex;
+	z-index: 0;
 	flex-direction: column;
 	align-items: center;
 	min-height: 100vh;
-	margin-bottom: 50px;
+	padding-bottom: 50px;
 	position: relative;
 
 	.background {
@@ -31,7 +30,6 @@ body {
 		height: 200px;
 		left: 0;
 		z-index: -20;
-		background-image: url('../img/background.png');
 		background-position: center bottom;
 		background-repeat: repeat-x;
 		background-size: contain;
@@ -64,5 +62,31 @@ body {
 		.no-music{
 			color: #d7dddd;
 		}
+
+		.hide{
+			display: none;
+		}
 	}
 }
+
+.pixel{
+	background-color: #35c8c8;
+
+	.background{
+		background-image: url('../img/background-pixel.png');
+	}
+	.cell{
+		border-color: #35c8c8;
+	}
+}
+
+.west{
+	background-color: #FFEFCB;
+		.background{
+			background-image: url('../img/background-west.png');
+		}
+		.cell{
+			border-color: #a17c25;
+		}
+}
+
