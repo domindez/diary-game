@@ -1,0 +1,63 @@
+.win-panel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__img {
+		height: 140px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+	p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
+
+		img {
+			height: 15px;
+		}
+	}
+
+	h2 {
+		font-size: 1.3em;
+		margin-bottom: 10px;
+	}
+
+	&__block-container {
+		margin: 10px 20px 30px;
+		display: flex;
+		width: 100%;
+		height: 50px;
+		gap: 10px;
+
+		.win-panel__block-panel {
+			padding: 30px;
+			background-color: #f3f3f3;
+			width: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			img {
+				height: 40px;
+				margin-right: 10px;
+			}
+
+			.beer {
+				height: 50px;
+				margin-right: 0px;
+			}
+
+			p {
+				font-size: 1.8em;
+			}
+		}
+	}
+
+	.countdown {
+		font-size: 1.2em;
+		margin-top: 10px;
+		color: #00c5c5;
+	}
+}

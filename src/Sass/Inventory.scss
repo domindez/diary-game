@@ -1,0 +1,17 @@
+.inventory{
+	text-align: center;
+	width: 100%;
+	
+	h3{
+		font-size: 1.5em;
+		margin-bottom: 20px;
+	}
+
+	.inventory-grid{
+		display: grid;
+		gap: 10px;
+		grid-template-columns: auto auto auto;
+		justify-content: center;
+		align-items: center;
+	}
+}

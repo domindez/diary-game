@@ -6,10 +6,11 @@ import PrintBoardGame from './printBoardGame'
 
 interface Props {
   gameStatus: GameStatus
+  playerSkin: string
   setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>
 }
 
-const BoardGame = ({ gameStatus, setGameStatus }: Props) => {
+const BoardGame = ({ gameStatus, setGameStatus, playerSkin }: Props) => {
   // Actualizar cerlda clicada en el GameStatus
   const clickCell = (coordenadasCelda: number[]) => {
     if (!gameStatus.canMove) return
@@ -23,7 +24,7 @@ const BoardGame = ({ gameStatus, setGameStatus }: Props) => {
 
   return (
 		<div className='boardgame'>
-          {PrintBoardGame(gameStatus, clickCell)}
+          {PrintBoardGame(gameStatus, clickCell, playerSkin)}
 		</div>
   )
 }

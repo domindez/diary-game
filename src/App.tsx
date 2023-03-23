@@ -12,7 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { getUserDataFromStorage } from './logic/func'
-import API_BASE_URL from './config'
+import { API_BASE_URL, gameStorage, userStorage } from './config'
+import Inventory from './Components/Inventory'
 
 function App () {
   const defaultGameStatus: GameStatus = {
@@ -33,21 +34,25 @@ function App () {
   const [activeGame, setActiveGame] = useState<GameStatus | null>(null)
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
   const [showPopup, setShowPopup] = useState(false)
+  const [showInventory, setShowInventory] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [playerSkin, setPlayerSkin] = useState('pirate')
+
   const [theme, setTheme] = useState('pixel')
 
   let gameRecovered = false
 
   // Si no tiene nada en el localStorage, guardar ahi
   useEffect(() => {
-    const userData = localStorage.getItem('diary-tfy-user')
+    const userData = localStorage.getItem(userStorage)
     if (userData == null) {
-      localStorage.setItem('diary-tfy-user', JSON.stringify({
+      localStorage.setItem(userStorage, JSON.stringify({
         userID: new Date().getTime(),
         livesSaved: 0,
-        nBottles: 0
+        nBottles: 0,
+        level: 1
       }))
     }
   }, [])
@@ -75,7 +80,7 @@ function App () {
   // Si hay una partida guardada en localStorage, ponerla
   useEffect(() => {
     if (gameRecovered) return
-    const storageData = localStorage.getItem('diary-tfy-game')
+    const storageData = localStorage.getItem(gameStorage)
     if (!storageData) return
     const recoveredGameStatus: GameStatus = JSON.parse(storageData)
     setGameStatus(recoveredGameStatus)
@@ -84,7 +89,7 @@ function App () {
 
   // Actualizar la partida en el localStorage
   useEffect(() => {
-    localStorage.setItem('diary-tfy-game', JSON.stringify(gameStatus))
+    localStorage.setItem(gameStorage, JSON.stringify(gameStatus))
   }, [gameStatus])
 
   // Activar el menú de victoria
@@ -106,12 +111,13 @@ function App () {
     <div className={`app ${theme}`}>
       <Header />
       <LifePanel stops={gameStatus.lives} />
-      <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus}/>
+      <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus} playerSkin={playerSkin}/>
       {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup}/>}
-
+      {showInventory && <Inventory setShowInventory={setShowInventory} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>}
       <div className='control-btns'>
         <FontAwesomeIcon onClick={toggleMusic} className={musicPlaying ? (soundEnabled ? 'music' : 'music no-music') : 'music no-music'} icon={musicPlaying ? (soundEnabled ? faVolumeHigh : faVolumeXmark) : faVolumeXmark}/>
         <FontAwesomeIcon onClick={() => { setTheme('west') }} className='music hide' icon={faWandSparkles}/>
+        <FontAwesomeIcon onClick={() => { setShowInventory(true) }} className='music' icon={faWandSparkles}/>
         {(gameStatus.isWin || gameStatus.lives < 1) && <StatisticsBtn setShowPopup={setShowPopup} />}
       </div>
 

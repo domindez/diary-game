@@ -1,5 +1,5 @@
 import axios from 'axios'
-import API_BASE_URL from '../config'
+import { API_BASE_URL, userStorage } from '../config'
 import { getUserDataFromStorage } from './func'
 import { type GameStatus } from './interfaces'
 
@@ -83,16 +83,9 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
         canMove: false,
         isWin: true
       }
-      increaseLocalStorageData('nBottles', 1)
-      increaseLocalStorageData('livesSaved', prevGameStatus.lives)
+      winLogic(prevGameStatus.lives)
       const audio = new Audio('endgame.mp3')
       void audio.play()
-      try {
-        const data = getUserDataFromStorage()
-        void axios.post(`${API_BASE_URL}/api/onwin`, data)
-      } catch (error) {
-        console.error(error)
-      }
       return newGameStatus
     })
   }
@@ -140,12 +133,20 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
   }
 }
 
-const increaseLocalStorageData = (propName: string, qty: number) => {
-  const storage = localStorage.getItem('diary-tfy-user')
-  if (storage != null) {
-    const userData = JSON.parse(storage)
+const winLogic = (livesSaved: number) => {
+  const userData = getUserDataFromStorage()
+  if (!userData) return
+  userData.nBottles = userData?.nBottles + 1
+  userData.livesSaved = userData.livesSaved + livesSaved
+  if (userData.livesSaved >= 100) {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    userData[propName] = userData[propName] + qty
-    localStorage.setItem('diary-tfy-user', JSON.stringify(userData))
+    userData.level = userData.level + 1
+    userData.livesSaved = userData.livesSaved - 100
   }
+  try {
+    void axios.post(`${API_BASE_URL}/api/onwin`, userData)
+  } catch (error) {
+    console.error(error)
+  }
+  localStorage.setItem(userStorage, JSON.stringify(userData))
 }

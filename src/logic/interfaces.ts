@@ -15,6 +15,7 @@ export interface GameStatus {
 
 export interface UserData {
   userID: null
-  livesSaved: 0
-  nBottles: 0
+  livesSaved: number
+  nBottles: number
+  level: number
 }

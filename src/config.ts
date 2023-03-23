@@ -1,4 +1,5 @@
 const isDev = process.env.NODE_ENV === 'development'
-const API_BASE_URL = isDev ? 'https://backend-diary-game-production.up.railway.app' : 'https://backend-diary-game-production.up.railway.app'
 
-export default API_BASE_URL
+export const API_BASE_URL = isDev ? 'http://localhost:4000' : 'https://backend-diary-game-production.up.railway.app'
+export const userStorage = 'diary-tfy-user'
+export const gameStorage = 'diary-tfy-game'
