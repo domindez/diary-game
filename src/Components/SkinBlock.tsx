@@ -1,3 +1,4 @@
+import { userStorage } from '../config'
 import { getUserDataFromStorage } from '../logic/func'
 import '../Sass/SkinBlock.scss'
 
@@ -16,6 +17,8 @@ const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl }: Props) => {
   const changeSkin = () => {
     if (!userLvl || userLvl < minLvl) return
     setPlayerSkin(skinName)
+    userData.usingSkin = skinName
+    localStorage.setItem(userStorage, JSON.stringify(userData))
   }
 
   console.log('playerSkin :>> ', playerSkin)

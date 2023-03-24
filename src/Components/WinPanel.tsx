@@ -48,8 +48,10 @@ const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
     return (
       <Popup setShowPopup={setShowPopup}>
         <div className='win-panel'>
-          <p>Nivel {userData?.level}</p>
-          {userData && <ExpBar exp={90} />}
+          <div className='lvl-container'>
+            <p>Nivel {userData?.level}</p>
+            {userData && <ExpBar exp={userData.livesSaved} />}
+          </div>
           <img className='win-panel__img' src={require('../img/win-beer.png')} alt='bottle' />
           <h2>¡Cerveeeeeeeza!</h2>
           <div className='win-panel__block-container'>
@@ -77,7 +79,7 @@ const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
       <Popup setShowPopup={setShowPopup}>
       <div className='win-panel'>
         <p>Nivel {userData?.level}</p>
-        {userData && <ExpBar exp={90} />}
+        {userData && <ExpBar exp={userData.livesSaved} />}
         <img className='win-panel__img' src={require('../img/police.png')} alt='bottle' />
         <h2>¿A dónde ibas dando tumbos?</h2>
         <div className='win-panel__block-container'>

@@ -31,8 +31,8 @@ export default function PrintBoardGame (gameStatus: GameStatus, clickCell: any, 
       tablero[y][x] =
 			<button
 			key={x}
-        className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : 'cell'}
-        // className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : gameStatus.path.some((pathCoords) => pathCoords[Y] === y && pathCoords[X] === x) ? 'cell green' : 'cell'}
+        // className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : 'cell'}
+        className={playerIsHere ? 'cell green' : trail ? 'cell green' : esMuerte ? 'cell red' : esBotella ? 'cell yellow' : gameStatus.path.some((pathCoords) => pathCoords[Y] === y && pathCoords[X] === x) ? 'cell green' : 'cell'}
         onClick={() => clickCell(coordenadasCelda)}>
         {up && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretUp} />}
         {down && !esMuerte && <FontAwesomeIcon className='game-icon arrow' icon={faCaretDown} />}

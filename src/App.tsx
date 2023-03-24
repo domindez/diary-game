@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react'
 import BoardGame from './Components/BoardGame'
 import Header from './Components/Header'
 import LifePanel from './Components/LifePanel'
-import StatisticsBtn from './Components/StatisticsBtn'
+import VictoryBtn from './Components/VictoruBtn'
 import WinPanel from './Components/WinPanel'
-import { type GameStatus } from './logic/interfaces'
+import { type UserData, type GameStatus } from './logic/interfaces'
 import AudioPlayer from 'react-audio-player'
 import './Sass/App.scss'
 import './Sass/Clouds.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
+import { faChartPie, faSuitcase, faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { getUserDataFromStorage } from './logic/func'
 import { API_BASE_URL, gameStorage, userStorage } from './config'
 import Inventory from './Components/Inventory'
+import Statistics from './Components/Statistics'
+import { updateUserData } from './logic/movement'
 
 function App () {
   const defaultGameStatus: GameStatus = {
@@ -28,12 +30,14 @@ function App () {
     canMove: false,
     clickedCell: [],
     isWin: false,
+    maxLives: 0,
     lives: 0
   }
 
   const [activeGame, setActiveGame] = useState<GameStatus | null>(null)
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
   const [showPopup, setShowPopup] = useState(false)
+  const [showStatistics, setShowStatistics] = useState(false)
   const [showInventory, setShowInventory] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
@@ -44,17 +48,30 @@ function App () {
 
   let gameRecovered = false
 
-  // Si no tiene nada en el localStorage, guardar ahi
   useEffect(() => {
+    // Si no tiene nada en el localStorage, guardar ahi
     const userData = localStorage.getItem(userStorage)
     if (userData == null) {
-      localStorage.setItem(userStorage, JSON.stringify({
+      const newUser: UserData = {
         userID: new Date().getTime(),
         livesSaved: 0,
         nBottles: 0,
-        level: 1
-      }))
+        level: 1,
+        usingSkin: 'pirate',
+        bonus: true,
+        statistics: {
+          nWins: 0,
+          gamesWonInARow: 0,
+          longestWinningStreak: 0,
+          averageAttemptsPerWin: 0,
+          lastGameWonID: 0,
+          totalDeaths: 0
+        },
+        extras: {}
+      }
+      localStorage.setItem(userStorage, JSON.stringify(newUser))
     }
+    updateUserData(setPlayerSkin)
   }, [])
 
   // Traer partida activa
@@ -114,11 +131,13 @@ function App () {
       <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus} playerSkin={playerSkin}/>
       {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup}/>}
       {showInventory && <Inventory setShowInventory={setShowInventory} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>}
+      {showStatistics && <Statistics setShowStatistics={setShowStatistics}/>}
       <div className='control-btns'>
-        <FontAwesomeIcon onClick={toggleMusic} className={musicPlaying ? (soundEnabled ? 'music' : 'music no-music') : 'music no-music'} icon={musicPlaying ? (soundEnabled ? faVolumeHigh : faVolumeXmark) : faVolumeXmark}/>
-        <FontAwesomeIcon onClick={() => { setTheme('west') }} className='music hide' icon={faWandSparkles}/>
-        <FontAwesomeIcon onClick={() => { setShowInventory(true) }} className='music' icon={faWandSparkles}/>
-        {(gameStatus.isWin || gameStatus.lives < 1) && <StatisticsBtn setShowPopup={setShowPopup} />}
+        <FontAwesomeIcon onClick={toggleMusic} className={musicPlaying ? (soundEnabled ? 'btn' : 'btn no-music') : 'btn no-music'} icon={musicPlaying ? (soundEnabled ? faVolumeHigh : faVolumeXmark) : faVolumeXmark}/>
+        <FontAwesomeIcon onClick={() => { setShowInventory(true) }} className='btn' icon={faSuitcase}/>
+        <FontAwesomeIcon onClick={() => { setShowStatistics(true) }} className='btn' icon={faChartPie}/>
+        <FontAwesomeIcon onClick={() => { setTheme('west') }} className='btn hide' icon={faWandSparkles}/>
+        {(gameStatus.isWin || gameStatus.lives < 1) && <VictoryBtn setShowPopup={setShowPopup} />}
       </div>
 
       {musicPlaying && <AudioPlayer src='musictheme.mp3' autoPlay loop muted={!soundEnabled}/>}

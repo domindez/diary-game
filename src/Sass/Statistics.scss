@@ -1,0 +1,45 @@
+.statistics {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h3 {
+		font-size: 1.2em;
+		margin-bottom: 10px;
+	}
+
+	&__block-container {
+		margin-top: 20px;
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		gap: 10px;
+		.statistics-block {
+			width: 100%;
+			text-align: center;
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+
+			.name {
+				background-color: #f3f3f3;
+				width: 100%;
+				border-radius: 3px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				
+			}
+			.number {
+				border-radius: 3px;
+				font-size: 2em;
+				color: #a200ff;
+				background-color: #f3f3f3;
+				min-width: 50px;
+
+			}
+		}
+	}
+}

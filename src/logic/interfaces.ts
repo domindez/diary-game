@@ -10,12 +10,26 @@ export interface GameStatus {
   canMove: boolean
   isWin: boolean
   clickedCell: number[]
+  maxLives: number
   lives: number
 }
 
+interface statistics {
+  nWins: number
+  gamesWonInARow: number
+  longestWinningStreak: number
+  averageAttemptsPerWin: number
+  lastGameWonID: number
+  totalDeaths: number
+}
+
 export interface UserData {
-  userID: null
+  userID: number
   livesSaved: number
   nBottles: number
   level: number
+  usingSkin: string
+  statistics: statistics
+  bonus: boolean
+  extras: object
 }
