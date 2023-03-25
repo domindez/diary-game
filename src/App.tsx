@@ -49,6 +49,7 @@ function App () {
   let gameRecovered = false
 
   useEffect(() => {
+    localStorage.removeItem('diary-tfy-user')
     // Si no tiene nada en el localStorage, guardar ahi
     const userData = localStorage.getItem(userStorage)
     if (userData == null) {
@@ -58,7 +59,7 @@ function App () {
         nBottles: 0,
         level: 1,
         usingSkin: 'pirate',
-        bonus: true,
+        bonus: false,
         statistics: {
           nWins: 0,
           gamesWonInARow: 0,
@@ -129,7 +130,7 @@ function App () {
       <Header />
       <LifePanel stops={gameStatus.lives} />
       <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus} playerSkin={playerSkin}/>
-      {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup}/>}
+      {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup} setShowStatistics={setShowStatistics}/>}
       {showInventory && <Inventory setShowInventory={setShowInventory} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>}
       {showStatistics && <Statistics setShowStatistics={setShowStatistics}/>}
       <div className='control-btns'>

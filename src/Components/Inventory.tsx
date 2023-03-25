@@ -22,13 +22,13 @@ const Inventory = ({ setShowInventory, setPlayerSkin, playerSkin }: Props) => {
 					<SkinBlock skinName='zombi' minLvl={0} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
 					<SkinBlock skinName='virus' minLvl={5} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
 					<SkinBlock skinName='bear' minLvl={10} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='einstein' minLvl={20} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='couple' minLvl={30} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='fatman' minLvl={40} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='redhair' minLvl={50} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='blackman' minLvl={60} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='ufo' minLvl={70} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
-					<SkinBlock skinName='sausage' minLvl={80} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='einstein' minLvl={15} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='couple' minLvl={20} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='fatman' minLvl={25} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='redhair' minLvl={30} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='blackman' minLvl={35} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='ufo' minLvl={40} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
+					<SkinBlock skinName='sausage' minLvl={45} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
 					<SkinBlock skinName='et' minLvl={90} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>
 				</div>
 			</div>

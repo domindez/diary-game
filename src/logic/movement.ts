@@ -54,6 +54,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
     const userData = getUserDataFromStorage()
     if (!userData) return
     userData.statistics.totalDeaths++
+    userData.statistics.averageAttemptsPerWin = parseFloat((userData.statistics.totalDeaths / userData.statistics.nWins).toFixed(1))
     localStorage.setItem(userStorage, JSON.stringify(userData))
     setGameStatus((prevGameStatus: GameStatus) => {
       const newGameStatus = {
@@ -145,19 +146,17 @@ const winLogic = (livesSaved: number) => {
   if (!userData || !gameData) return
 
   userData.nBottles++
-  userData.livesSaved = userData.livesSaved + livesSaved
-  if (userData.bonus) userData.livesSaved = userData.livesSaved + 5
-  if (userData.livesSaved >= 100) {
-    userData.level++
-    userData.livesSaved = userData.livesSaved - 100
-  }
-  if (userData.statistics.gamesWonInARow >= 3) userData.bonus = true
-  // Estadísticas
   userData.statistics.nWins++
   if (userData.statistics.lastGameWonID === gameData.gameID - 1) {
     userData.statistics.gamesWonInARow++
   } else {
     userData.statistics.gamesWonInARow = 1
+  }
+  if (userData.statistics.gamesWonInARow >= 5) userData.bonus = true
+  userData.livesSaved = userData.livesSaved + livesSaved + (userData.bonus ? 10 : 0)
+  if (userData.livesSaved >= 100) {
+    userData.level++
+    userData.livesSaved = userData.livesSaved - 100
   }
   if (userData.statistics.longestWinningStreak < userData.statistics.gamesWonInARow) userData.statistics.longestWinningStreak = userData.statistics.gamesWonInARow
   userData.statistics.lastGameWonID = gameData.gameID
@@ -179,6 +178,11 @@ const loseLogic = () => {
   if (!userData) return
   userData.bonus = false
   localStorage.setItem(userStorage, JSON.stringify(userData))
+  try {
+    void axios.post(`${API_BASE_URL}/api/onwin`, userData)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const updateUserData = (setPlayerSkin: React.Dispatch<React.SetStateAction<string>>) => {
@@ -188,11 +192,8 @@ export const updateUserData = (setPlayerSkin: React.Dispatch<React.SetStateActio
   // Poner el último aspecto que usó
   setPlayerSkin(userData.usingSkin)
 
-  console.log('userData.statistics :>> ', userData)
   // Comprobar bonus
-  if (userData.bonus && userData.statistics.lastGameWonID !== gameData.gameID - 1) {
-    userData.bonus = false
-    console.log('Cambiado a falso')
-  }
-  console.log('userData.bonus :>> ', userData.bonus)
+  if (userData.bonus && userData.statistics.lastGameWonID !== gameData.gameID - 1 && !gameData.isWin) userData.bonus = false
+  if (userData.statistics.lastGameWonID !== gameData.gameID - 1 && !gameData.isWin) userData.statistics.gamesWonInARow = 0
+  localStorage.setItem(userStorage, JSON.stringify(userData))
 }

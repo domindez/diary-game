@@ -21,7 +21,6 @@ const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl }: Props) => {
     localStorage.setItem(userStorage, JSON.stringify(userData))
   }
 
-  console.log('playerSkin :>> ', playerSkin)
   return (
 		<div className={active ? 'skin-block active' : 'skin-block'} onClick={changeSkin}>
 			{userLvl && userLvl >= minLvl ? <img src={require(`../img/skins/player-${skinName}.png`)} alt='player' /> : <img src={require('../img/skins/player-unknown.png')} alt='player' />}

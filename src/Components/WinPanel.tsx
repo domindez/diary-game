@@ -1,5 +1,6 @@
 import { getUserDataFromStorage } from '../logic/func'
 import { useEffect, useState } from 'react'
+import boltActive from '../img/bolt-active.svg'
 import Popup from './Popup'
 import ShareBtns from './ShareBtns'
 import ExpBar from './ExpBar'
@@ -9,9 +10,10 @@ interface Props {
   lives: number
   isWin: boolean
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>
+  setShowStatistics: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
+const WinPanel = ({ lives, isWin, setShowPopup, setShowStatistics }: Props) => {
   const userData = getUserDataFromStorage()
 
   const [currentTime, setCurrentTime] = useState<Date>(new Date())
@@ -44,20 +46,25 @@ const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
     return `${hours}h ${minutes}m ${seconds}s`
   }
 
+  const showStatistics = () => {
+    setShowPopup(false)
+    setShowStatistics(true)
+  }
+
   if (isWin) {
     return (
       <Popup setShowPopup={setShowPopup}>
         <div className='win-panel'>
-          <div className='lvl-container'>
-            <p>Nivel {userData?.level}</p>
+          <div className='lvl-container' onClick={showStatistics}>
+            <p>Nivel {userData?.level} {userData?.bonus && <img src={boltActive} alt='bolt' />}</p>
             {userData && <ExpBar exp={userData.livesSaved} />}
           </div>
           <img className='win-panel__img' src={require('../img/win-beer.png')} alt='bottle' />
           <h2>¡Cerveeeeeeeza!</h2>
-          <div className='win-panel__block-container'>
+          <div className='win-panel__block-container' onClick={showStatistics}>
             <div className='win-panel__block-panel'>
               <img src={require('../img/lives.png')} alt='lives' />
-              <p> +{lives}</p>
+              <p> +{lives + (userData?.bonus ? 10 : 0)}</p>
             </div>
             <div className='win-panel__block-panel'>
               <img className='beer' src={require('../img/beer.png')} alt='lives' />
@@ -78,14 +85,16 @@ const WinPanel = ({ lives, isWin, setShowPopup }: Props) => {
 
       <Popup setShowPopup={setShowPopup}>
       <div className='win-panel'>
-        <p>Nivel {userData?.level}</p>
-        {userData && <ExpBar exp={userData.livesSaved} />}
+          <div className='lvl-container' onClick={showStatistics}>
+            <p>Nivel {userData?.level} {userData?.bonus && <img src={boltActive} alt='bolt' />}</p>
+            {userData && <ExpBar exp={userData.livesSaved} />}
+          </div>
         <img className='win-panel__img' src={require('../img/police.png')} alt='bottle' />
         <h2>¿A dónde ibas dando tumbos?</h2>
-        <div className='win-panel__block-container'>
+        <div className='win-panel__block-container' onClick={showStatistics}>
           <div className='win-panel__block-panel'>
           <img src={require('../img/lives.png')} alt='lives' />
-          <p> +{lives}</p>
+          <p> +{lives + (userData?.bonus ? 10 : 0)}</p>
           </div>
         <div className='win-panel__block-panel'>
           <img className='beer' src={require('../img/beer.png')} alt='lives' />
