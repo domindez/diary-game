@@ -10,8 +10,8 @@ interface Props {
 
 function ShareBtns ({ lives }: Props) {
   const pageUrl = encodeURI(document.location.href)
-  const pageTittle = lives > 0 ? encodeURI(`He conseguido la cerveza y me han sobrado ${lives} ❤ ¿Puedes hacerlo mejor?`) : encodeURI('¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?')
-  const pageTittleAlt = lives > 0 ? `He conseguido la cerveza y me han sobrado ${lives} ❤ ¿Puedes hacerlo mejor?` : '¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?'
+  const pageTittle = lives > 0 ? encodeURI(`He conseguido la cerveza y he ganado ${lives} ❤ ¿Puedes hacerlo mejor?`) : encodeURI('¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?')
+  const pageTittleAlt = lives > 0 ? `He conseguido la cerveza y he ganado ${lives} ❤ ¿Puedes hacerlo mejor?` : '¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?'
 
   const share = () => {
     void navigator.share({

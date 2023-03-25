@@ -49,7 +49,6 @@ function App () {
   let gameRecovered = false
 
   useEffect(() => {
-    localStorage.removeItem('diary-tfy-user')
     // Si no tiene nada en el localStorage, guardar ahi
     const userData = localStorage.getItem(userStorage)
     if (userData == null) {
