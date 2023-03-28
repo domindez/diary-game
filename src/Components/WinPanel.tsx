@@ -1,21 +1,23 @@
-import { getUserDataFromStorage } from '../logic/func'
 import { useEffect, useState } from 'react'
 import boltActive from '../img/bolt-active.svg'
 import Popup from './Popup'
 import ShareBtns from './ShareBtns'
 import ExpBar from './ExpBar'
 import '../Sass/WinPannel.scss'
+import { type UserData } from '../logic/interfaces'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartPie, faSuitcase } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   lives: number
   isWin: boolean
+  user: UserData | null
   setShowPopup: React.Dispatch<React.SetStateAction<boolean>>
   setShowStatistics: React.Dispatch<React.SetStateAction<boolean>>
+  setShowInventory: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WinPanel = ({ lives, isWin, setShowPopup, setShowStatistics }: Props) => {
-  const userData = getUserDataFromStorage()
-
+const WinPanel = ({ lives, isWin, setShowPopup, setShowStatistics, user, setShowInventory }: Props) => {
   const [currentTime, setCurrentTime] = useState<Date>(new Date())
 
   useEffect(() => {
@@ -56,19 +58,23 @@ const WinPanel = ({ lives, isWin, setShowPopup, setShowStatistics }: Props) => {
       <Popup setShowPopup={setShowPopup}>
         <div className='win-panel'>
           <div className='lvl-container' onClick={showStatistics}>
-            <p>Nivel {userData?.level} {userData?.bonus && <img src={boltActive} alt='bolt' />}</p>
-            {userData && <ExpBar exp={userData.livesSaved} />}
+            <p>Nivel {user?.level} {user?.bonus && <img src={boltActive} alt='bolt' />}</p>
+            {user && <ExpBar exp={user.livesSaved} />}
+          </div>
+          <div className='control-btns'>
+            <FontAwesomeIcon onClick={() => { setShowPopup(false); setShowInventory(true) }} className='btn onwin' icon={faSuitcase}/>
+            <FontAwesomeIcon onClick={() => { setShowPopup(false); setShowStatistics(true) }} className='btn onwin' icon={faChartPie}/>
           </div>
           <img className='win-panel__img' src={require('../img/win-beer.png')} alt='bottle' />
           <h2>¡Cerveeeeeeeza!</h2>
           <div className='win-panel__block-container' onClick={showStatistics}>
             <div className='win-panel__block-panel'>
               <img src={require('../img/lives.png')} alt='lives' />
-              <p> +{lives + (userData?.bonus ? 10 : 0)}</p>
+              <p> +{lives + (user?.bonus ? 10 : 0)}</p>
             </div>
             <div className='win-panel__block-panel'>
               <img className='beer' src={require('../img/beer.png')} alt='lives' />
-              <p> x{userData?.nBottles}</p>
+              <p> x{user?.nBottles}</p>
             </div>
           </div>
           <p>Comparte y reta a tus amigos</p>
@@ -85,20 +91,24 @@ const WinPanel = ({ lives, isWin, setShowPopup, setShowStatistics }: Props) => {
 
       <Popup setShowPopup={setShowPopup}>
       <div className='win-panel'>
-          <div className='lvl-container' onClick={showStatistics}>
-            <p>Nivel {userData?.level} {userData?.bonus && <img src={boltActive} alt='bolt' />}</p>
-            {userData && <ExpBar exp={userData.livesSaved} />}
-          </div>
+        <div className='lvl-container' onClick={showStatistics}>
+          <p>Nivel {user?.level} {user?.bonus && <img src={boltActive} alt='bolt' />}</p>
+          {user && <ExpBar exp={user.livesSaved} />}
+        </div>
+        <div className='control-btns'>
+          <FontAwesomeIcon onClick={() => { setShowPopup(false); setShowInventory(true) }} className='btn onwin' icon={faSuitcase}/>
+          <FontAwesomeIcon onClick={() => { setShowPopup(false); setShowStatistics(true) }} className='btn onwin' icon={faChartPie}/>
+        </div>
         <img className='win-panel__img' src={require('../img/police.png')} alt='bottle' />
         <h2>¿A dónde ibas dando tumbos?</h2>
         <div className='win-panel__block-container' onClick={showStatistics}>
           <div className='win-panel__block-panel'>
           <img src={require('../img/lives.png')} alt='lives' />
-          <p> +{lives + (userData?.bonus ? 10 : 0)}</p>
+          <p> +{lives + (user?.bonus ? 10 : 0)}</p>
           </div>
         <div className='win-panel__block-panel'>
           <img className='beer' src={require('../img/beer.png')} alt='lives' />
-          <p> x{userData?.nBottles}</p>
+          <p> x{user?.nBottles}</p>
         </div>
         </div>
         <p>Comparte y reta a tus amigos</p>

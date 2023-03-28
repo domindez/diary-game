@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { getUserDataFromStorage } from '../logic/func'
 import bolt from '../img/bolt.svg'
 import boltActive from '../img/bolt-active.svg'
 import '../Sass/PowerBar.scss'
+import { type UserData } from '../logic/interfaces'
 
-const PowerBar = () => {
-  const userData = getUserDataFromStorage()
-  if (!userData) return <></>
-  const [powerLvl] = useState(userData.statistics.gamesWonInARow)
+interface Props {
+  user: UserData | null
+}
+
+const PowerBar = ({ user }: Props) => {
+  if (!user) return <></>
+  const [powerLvl] = useState(user.statistics.gamesWonInARow)
 
   return (
     <div className='power-bar'>

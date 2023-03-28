@@ -24,10 +24,11 @@ interface statistics {
 }
 
 export interface UserData {
-  userID: number
+  userID: string
   livesSaved: number
   nBottles: number
   level: number
+  skins: string[]
   usingSkin: string
   statistics: statistics
   bonus: boolean

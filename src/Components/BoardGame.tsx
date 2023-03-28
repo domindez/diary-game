@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import { movement } from '../logic/movement'
 import '../Sass/BoardGame.scss'
-import { type GameStatus } from '../logic/interfaces'
+import { type UserData, type GameStatus } from '../logic/interfaces'
 import PrintBoardGame from './printBoardGame'
 
 interface Props {
   gameStatus: GameStatus
   playerSkin: string
+  user: UserData | null
+  setUser: React.Dispatch<React.SetStateAction<UserData | null>>
   setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>
 }
 
-const BoardGame = ({ gameStatus, setGameStatus, playerSkin }: Props) => {
-  // Actualizar cerlda clicada en el GameStatus
+const BoardGame = ({ gameStatus, setGameStatus, playerSkin, user, setUser }: Props) => {
+  // Actualizar celda clicada en el GameStatus
   const clickCell = (coordenadasCelda: number[]) => {
     if (!gameStatus.canMove) return
     setGameStatus({ ...gameStatus, clickedCell: coordenadasCelda })
@@ -19,7 +21,7 @@ const BoardGame = ({ gameStatus, setGameStatus, playerSkin }: Props) => {
 
   // Hacer el movimiento
   useEffect(() => {
-    movement(gameStatus, setGameStatus)
+    movement(gameStatus, setGameStatus, user, setUser)
   }, [gameStatus.clickedCell])
 
   return (

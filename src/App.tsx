@@ -11,8 +11,7 @@ import './Sass/Clouds.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartPie, faSuitcase, faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
-import { getUserDataFromStorage } from './logic/func'
-import { API_BASE_URL, gameStorage, userStorage } from './config'
+import { API_BASE_URL, gameStorage, userIDStorage } from './config'
 import Inventory from './Components/Inventory'
 import Statistics from './Components/Statistics'
 import { updateUserData } from './logic/movement'
@@ -36,6 +35,7 @@ function App () {
 
   const [activeGame, setActiveGame] = useState<GameStatus | null>(null)
   const [gameStatus, setGameStatus] = useState<GameStatus>(defaultGameStatus)
+  const [user, setUser] = useState<UserData | null>(null)
   const [showPopup, setShowPopup] = useState(false)
   const [showStatistics, setShowStatistics] = useState(false)
   const [showInventory, setShowInventory] = useState(false)
@@ -47,41 +47,17 @@ function App () {
   const [theme, setTheme] = useState('pixel')
 
   let gameRecovered = false
-
+  // Traer usuario y partida activa
   useEffect(() => {
-    // Si no tiene nada en el localStorage, guardar ahi
-    const userData = localStorage.getItem(userStorage)
-    if (userData == null) {
-      const newUser: UserData = {
-        userID: new Date().getTime(),
-        livesSaved: 0,
-        nBottles: 0,
-        level: 1,
-        usingSkin: 'pirate',
-        bonus: false,
-        statistics: {
-          nWins: 0,
-          gamesWonInARow: 0,
-          longestWinningStreak: 0,
-          averageAttemptsPerWin: 0,
-          lastGameWonID: 0,
-          totalDeaths: 0
-        },
-        extras: {}
-      }
-      localStorage.setItem(userStorage, JSON.stringify(newUser))
-    }
-    updateUserData(setPlayerSkin)
-  }, [])
-
-  // Traer partida activa
-  useEffect(() => {
+    const userID = localStorage.getItem(userIDStorage) ?? new Date().getTime()
+    localStorage.setItem(userIDStorage, userID.toString())
     const getActiveGame = async () => {
       try {
-        const data = getUserDataFromStorage()
-        const response = await axios.post(`${API_BASE_URL}/api/onload`, data)
-        setActiveGame(response.data)
+        const response = await axios.post(`${API_BASE_URL}/api/onload`, { userID })
+        setUser(response.data.user)
+        setActiveGame(response.data.game)
         setLoading(false)
+        updateUserData(setPlayerSkin, response.data.user, setUser)
       } catch (error) {
         console.error(error)
       }
@@ -127,11 +103,11 @@ function App () {
   return (
     <div className={`app ${theme}`}>
       <Header />
-      <LifePanel stops={gameStatus.lives} />
-      <BoardGame gameStatus={gameStatus} setGameStatus={setGameStatus} playerSkin={playerSkin}/>
-      {showPopup && <WinPanel isWin={gameStatus.isWin} lives={gameStatus.lives} setShowPopup={setShowPopup} setShowStatistics={setShowStatistics}/>}
-      {showInventory && <Inventory setShowInventory={setShowInventory} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>}
-      {showStatistics && <Statistics setShowStatistics={setShowStatistics}/>}
+      <LifePanel stops={gameStatus.lives} user={user}/>
+      <BoardGame gameStatus={gameStatus} user={user} setUser={setUser} setGameStatus={setGameStatus} playerSkin={playerSkin}/>
+      {showPopup && <WinPanel isWin={gameStatus.isWin} user={user} lives={gameStatus.lives} setShowPopup={setShowPopup} setShowStatistics={setShowStatistics} setShowInventory={setShowInventory}/>}
+      {showInventory && <Inventory user={user} setUser={setUser} setShowInventory={setShowInventory} setPlayerSkin={setPlayerSkin} playerSkin={playerSkin}/>}
+      {showStatistics && <Statistics setShowStatistics={setShowStatistics} user={user}/>}
       <div className='control-btns'>
         <FontAwesomeIcon onClick={toggleMusic} className={musicPlaying ? (soundEnabled ? 'btn' : 'btn no-music') : 'btn no-music'} icon={musicPlaying ? (soundEnabled ? faVolumeHigh : faVolumeXmark) : faVolumeXmark}/>
         <FontAwesomeIcon onClick={() => { setShowInventory(true) }} className='btn' icon={faSuitcase}/>

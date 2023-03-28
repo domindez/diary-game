@@ -1,12 +1,11 @@
-import { getUserDataFromStorage } from '../logic/func'
+import { type UserData } from '../logic/interfaces'
 import '../Sass/LifePanel.scss'
 interface Props {
   stops: number
+  user: UserData | null
 }
 
-const LifePanel = ({ stops }: Props) => {
-  const userData = getUserDataFromStorage()
-
+const LifePanel = ({ stops, user }: Props) => {
   return (
 		<div className='life-panel'>
       <div className='panel-container'>
@@ -15,7 +14,7 @@ const LifePanel = ({ stops }: Props) => {
       </div>
       <div className='panel-container'>
         <img className='beer-icon' src={require('../img/beer.png')} alt='stop' />
-        <p>· {userData?.nBottles}</p>
+        <p>· {user?.nBottles}</p>
       </div>
 		</div>
   )

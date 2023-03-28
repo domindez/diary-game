@@ -1,24 +1,26 @@
-import { userStorage } from '../config'
-import { getUserDataFromStorage } from '../logic/func'
+import { type UserData } from '../logic/interfaces'
 import '../Sass/SkinBlock.scss'
 
 interface Props {
   skinName: string
   playerSkin: string
   minLvl: number
+  user: UserData | null
   setPlayerSkin: React.Dispatch<React.SetStateAction<string>>
+  setUser: React.Dispatch<React.SetStateAction<UserData | null>>
 }
 
-const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl }: Props) => {
+const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl, user, setUser }: Props) => {
+  if (!user) return <></>
+  const userData = { ...user }
   const active = skinName === playerSkin && true
-  const userData = getUserDataFromStorage()
   const userLvl = userData?.level
 
   const changeSkin = () => {
     if (!userLvl || userLvl < minLvl) return
     setPlayerSkin(skinName)
     userData.usingSkin = skinName
-    localStorage.setItem(userStorage, JSON.stringify(userData))
+    setUser(userData)
   }
 
   return (

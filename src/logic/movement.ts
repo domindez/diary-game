@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { API_BASE_URL, userStorage } from '../config'
-import { getGameFromStorage, getUserDataFromStorage } from './func'
-import { type GameStatus } from './interfaces'
+import { API_BASE_URL } from '../config'
+import { getGameFromStorage } from './func'
+import { type UserData, type GameStatus } from './interfaces'
 
-export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
+export const movement = (gameStatus: GameStatus, setGameStatus: React.Dispatch<React.SetStateAction<GameStatus>>, user: UserData | null, setUser: React.Dispatch<React.SetStateAction<UserData | null>>) => {
+  if (!user) return
   const playerPos = gameStatus.playerPos
   const trail = gameStatus.trail
   const clickedCell = gameStatus.clickedCell
@@ -45,17 +46,16 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
     return true
   }
 
-  if (lives < 1 && gameStatus.gameReady) loseLogic()
+  if (lives < 1 && gameStatus.gameReady) loseLogic(user, setUser)
 
   if (!canMove || lives < 1 || !cellIsClose()) return
 
   // Si pisa muerte
   if (!cellIsGreen()) {
-    const userData = getUserDataFromStorage()
-    if (!userData) return
+    const userData: UserData | null = { ...user }
     userData.statistics.totalDeaths++
     userData.statistics.averageAttemptsPerWin = parseFloat((userData.statistics.totalDeaths / userData.statistics.nWins).toFixed(1))
-    localStorage.setItem(userStorage, JSON.stringify(userData))
+    setUser(userData)
     setGameStatus((prevGameStatus: GameStatus) => {
       const newGameStatus = {
         ...prevGameStatus,
@@ -90,7 +90,7 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
         canMove: false,
         isWin: true
       }
-      winLogic(prevGameStatus.lives)
+      winLogic(prevGameStatus.lives, user, setUser)
       const audio = new Audio('endgame.mp3')
       void audio.play()
       return newGameStatus
@@ -140,8 +140,9 @@ export const movement = (gameStatus: GameStatus, setGameStatus: any) => {
   }
 }
 
-const winLogic = (livesSaved: number) => {
-  const userData = getUserDataFromStorage()
+const winLogic = (livesSaved: number, user: UserData | null, setUser: React.Dispatch<React.SetStateAction<UserData | null>>) => {
+  if (!user) return
+  const userData = { ...user }
   const gameData = getGameFromStorage()
   if (!userData || !gameData) return
 
@@ -160,10 +161,10 @@ const winLogic = (livesSaved: number) => {
   }
   if (userData.statistics.longestWinningStreak < userData.statistics.gamesWonInARow) userData.statistics.longestWinningStreak = userData.statistics.gamesWonInARow
   userData.statistics.lastGameWonID = gameData.gameID
-  userData.statistics.averageAttemptsPerWin = parseFloat((userData.statistics.totalDeaths / userData.statistics.nWins).toFixed(1))
+  userData.statistics.averageAttemptsPerWin = parseFloat((userData.statistics.totalDeaths / userData.statistics.nWins + 1).toFixed(1))
 
-  // Guardar en el localstorage
-  localStorage.setItem(userStorage, JSON.stringify(userData))
+  // Guardar en el estado
+  setUser(userData)
 
   // Envíar al backend
   try {
@@ -173,11 +174,12 @@ const winLogic = (livesSaved: number) => {
   }
 }
 
-const loseLogic = () => {
-  const userData = getUserDataFromStorage()
+const loseLogic = (user: UserData | null, setUser: React.Dispatch<React.SetStateAction<UserData | null>>) => {
+  if (!user) return
+  const userData = { ...user }
   if (!userData) return
   userData.bonus = false
-  localStorage.setItem(userStorage, JSON.stringify(userData))
+  setUser(userData)
   try {
     void axios.post(`${API_BASE_URL}/api/onwin`, userData)
   } catch (error) {
@@ -185,15 +187,18 @@ const loseLogic = () => {
   }
 }
 
-export const updateUserData = (setPlayerSkin: React.Dispatch<React.SetStateAction<string>>) => {
-  const userData = getUserDataFromStorage()
+export const updateUserData = (setPlayerSkin: React.Dispatch<React.SetStateAction<string>>, user: UserData | null, setUser: React.Dispatch<React.SetStateAction<UserData | null>>) => {
+  if (!user) return
+  const userData = { ...user }
   const gameData = getGameFromStorage()
   if (!userData || !gameData) return
   // Poner el último aspecto que usó
   setPlayerSkin(userData.usingSkin)
 
   // Comprobar bonus
-  if (userData.bonus && userData.statistics.lastGameWonID !== gameData.gameID - 1 && !gameData.isWin) userData.bonus = false
-  if (userData.statistics.lastGameWonID !== gameData.gameID - 1 && !gameData.isWin) userData.statistics.gamesWonInARow = 0
-  localStorage.setItem(userStorage, JSON.stringify(userData))
+  if (userData.statistics.lastGameWonID !== gameData.gameID - 1 && !gameData.isWin) {
+    userData.statistics.gamesWonInARow = 0
+    userData.bonus = false
+  }
+  setUser(userData)
 }
