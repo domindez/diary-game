@@ -1,0 +1,20 @@
+{
+	"your_statistics": "Your statistics",
+	"level": "Level",
+	"average_attempts": "Average attempts / win",
+	"longest_streak": "Longest streak",
+	"total_winnings": "Total winnings",
+	"current_streak": "Current streak",
+	"power_up_msg_bf_heart": "With a streak of 5 you earn an extra 10 ",
+	"power_up_msg_aft_heart": " on each win",
+	"your_characters": "Your characters",
+	"isla_misterio_msg1": "Give Me a Beer is a game based on",
+	"isla_misterio_msg2": "A game for bars.",
+	"win_msg": "Beeeeeeeeeeer!",
+	"share_msg": "Share and challenge your friends",
+	"win_popup_msg1": "Come back tomorrow",
+	"win_popup_msg2": "The path changes every day!",
+	"lose_msg": "Where were you bumping to?",
+	"win_share_msg": "I got the beer and won {{lives}} ❤ Can you do better?",
+	"lose_share_msg": "I didn't get the beer! Can you do better?"
+}

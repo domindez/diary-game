@@ -1,6 +1,7 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import '../Sass/Popup.scss'
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Popup = ({ children, setShowPopup }: Props) => {
+  const { t } = useTranslation()
   return (
 		<div className='overlay' onClick={() => { setShowPopup(false) }}>
 			<div className='popup' onClick={(e) => { e.stopPropagation() }}>
@@ -16,7 +18,7 @@ const Popup = ({ children, setShowPopup }: Props) => {
 			{children}
 			</div>
 			<div className='tfy-msg'>
-				<p>Give Me a Beer es un juego basado en <a href='https://trivify.es/isla-misterio-para-bares.html'>Isla Misterio.</a> Un juego para bares.</p>
+				<p>{t('isla_misterio_msg1')} <a href='https://trivify.es/isla-misterio-para-bares.html'>Isla Misterio.</a> {t('isla_misterio_msg2')}</p>
 				</div>
 		</div>
   )

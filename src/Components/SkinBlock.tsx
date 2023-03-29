@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { type UserData } from '../logic/interfaces'
 import '../Sass/SkinBlock.scss'
 
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl, user, setUser }: Props) => {
+  const { t } = useTranslation()
   if (!user) return <></>
   const userData = { ...user }
   const active = skinName === playerSkin && true
@@ -26,7 +28,7 @@ const SkinBlock = ({ skinName, setPlayerSkin, playerSkin, minLvl, user, setUser 
   return (
 		<div className={active ? 'skin-block active' : 'skin-block'} onClick={changeSkin}>
 			{userLvl && userLvl >= minLvl ? <img src={require(`../img/skins/player-${skinName}.png`)} alt='player' /> : <img src={require('../img/skins/player-unknown.png')} alt='player' />}
-			{(userLvl && userLvl < minLvl) && <div className='min-level'>Nivel {minLvl}</div>}
+			{(userLvl && userLvl < minLvl) && <div className='min-level'>{t('level')} {minLvl}</div>}
 		</div>
   )
 }

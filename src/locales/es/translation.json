@@ -1,0 +1,21 @@
+{
+  "your_statistics": "Tus estadísticas",
+  "level": "Nivel",
+  "average_attempts": "Media de intentos / victoria",
+  "longest_streak": "Racha más larga",
+	"total_winnings": "Victorias totales",
+	"current_streak": "Racha actual",
+	"power_up_msg_bf_heart": "Con una racha de 5 ganas 10 ",
+	"power_up_msg_aft_heart": " extra en cada victoria",
+	"your_characters": "Tus personajes",
+	"isla_misterio_msg1": "Give Me a Beer es un juego basado en",
+	"isla_misterio_msg2": "Un juego para bares.",
+	"win_msg": "¡Cerveeeeeeeza!",
+	"share_msg": "Comparte y reta a tus amigos",
+	"win_popup_msg1": "Vuelve mañana",
+	"win_popup_msg2": "¡El camino cambia cada día!",
+	"lose_msg": "¿A dónde ibas dando tumbos?",
+	"win_share_msg": "He conseguido la cerveza y he ganado {{lives}} ❤ ¿Puedes hacerlo mejor?",
+	"lose_share_msg": "¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?"
+
+}

@@ -3,15 +3,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faTelegram, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import '../Sass/ShareBtns.scss'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   lives: number
 }
 
 function ShareBtns ({ lives }: Props) {
+  const { t } = useTranslation()
+  const winMsg = t('win_share_msg', { lives: lives })
+  const loseMsg = t('lose_share_msg')
   const pageUrl = encodeURI(document.location.href)
-  const pageTittle = lives > 0 ? encodeURI(`He conseguido la cerveza y he ganado ${lives} ❤ ¿Puedes hacerlo mejor?`) : encodeURI('¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?')
-  const pageTittleAlt = lives > 0 ? `He conseguido la cerveza y he ganado ${lives} ❤ ¿Puedes hacerlo mejor?` : '¡No he conseguido la cerveza! ¿Puedes hacerlo mejor?'
+  const pageTittle = lives > 0 ? encodeURI(winMsg) : encodeURI(loseMsg)
+  const pageTittleAlt = lives > 0 ? winMsg : loseMsg
 
   const share = () => {
     void navigator.share({
