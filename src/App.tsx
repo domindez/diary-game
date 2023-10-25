@@ -10,7 +10,6 @@ import './Sass/App.scss'
 import './Sass/Clouds.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartPie, faSuitcase, faVolumeHigh, faVolumeXmark, faWandSparkles } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 import { API_BASE_URL, gameStorage, userIDStorage } from './config'
 import Inventory from './Components/Inventory'
 import Statistics from './Components/Statistics'
@@ -53,15 +52,31 @@ function App () {
     localStorage.setItem(userIDStorage, userID.toString())
     const getActiveGame = async () => {
       try {
-        const response = await axios.post(`${API_BASE_URL}/api/onload`, { userID })
-        setUser(response.data.user)
-        setActiveGame(response.data.game)
+        const userID = localStorage.getItem(userIDStorage) ?? new Date().getTime()
+        localStorage.setItem(userIDStorage, userID.toString())
+
+        const response = await fetch(`${API_BASE_URL}/api/onload`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userID })
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const data = await response.json()
+        setUser(data.user)
+        setActiveGame(data.game)
         setLoading(false)
-        updateUserData(setPlayerSkin, response.data.user, setUser)
+        updateUserData(setPlayerSkin, data.user, setUser)
       } catch (error) {
         console.error(error)
       }
     }
+
     void getActiveGame()
   }, [])
 
